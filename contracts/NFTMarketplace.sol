@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/Counters.sol"; //To keep count of nfts created
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
@@ -33,22 +33,12 @@ contract NFTMarketplace is ERC721URIStorage {
         bool sold
     );
 
-    modifier onlyOwner() {
-        require(
-            msg.sender == owner,
-            "only owner of the marketplace can change the listing price"
-        );
-        _;
-    }
-
     constructor() ERC721("Metaverse Tokens", "METT") {
         owner = payable(msg.sender);
     }
 
     /* Updates the listing price of the contract */
-    function updateListingPrice(
-        uint256 _listingPrice
-    ) public payable onlyOwner {
+    function updateListingPrice(uint256 _listingPrice) public payable {
         require(
             owner == msg.sender,
             "Only marketplace owner can update listing price."
